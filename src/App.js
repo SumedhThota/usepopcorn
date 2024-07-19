@@ -74,11 +74,9 @@ function Numresults({movies}){
         </p>
 }
 
-function Navbar({movies}){
+function Navbar({children}){
   return <nav className="nav-bar">
-        <Logo />
-        <Search />
-        <Numresults movies={movies}/>
+        {children}
       </nav>
 }
 
@@ -104,18 +102,18 @@ function MovieList({movies}){
 </ul>
 }
 
-function ListBox({movies}){
+function Box({children}){
   
-  const [isOpen1, setIsOpen1] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   return <div className="box">
   <button
     className="btn-toggle"
-    onClick={() => setIsOpen1((open) => !open)}
+    onClick={() => setIsOpen((open) => !open)}
   >
-    {isOpen1 ? "–" : "+"}
+    {isOpen ? "–" : "+"}
   </button>
-  {isOpen1 && (
-    <MovieList movies={movies}/>
+  {isOpen && (
+    children
   )}
 </div>
 }
@@ -177,42 +175,32 @@ function WatchedMoviesList({watched}){
 </ul>
 }
 
-function WatchedBox(){
-  const [watched, setWatched] = useState(tempWatchedData);  
-  const [isOpen2, setIsOpen2] = useState(true);
-
-  return <div className="box">
-  <button
-    className="btn-toggle"
-    onClick={() => setIsOpen2((open) => !open)}
-  >
-    {isOpen2 ? "–" : "+"}
-  </button>
-  {isOpen2 && (
-    <>
-      <WatchedSummary watched={watched} />
-      <WatchedMoviesList watched={watched} />
-    </>
-  )}
-</div>
-}
-
-
-function Main({movies}){
+function Main({children}){
   return <main className="main">
-        
-        <ListBox movies={movies}/>
-        <WatchedBox />
+        {children}
       </main>
 }
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
+
   return (
     <>
       
-      <Navbar movies={movies}/>
-      <Main movies={movies}/>
+      <Navbar>
+        <Logo />
+        <Search />
+        <Numresults movies={movies}/></Navbar>
+      <Main>
+        <Box>
+          <MovieList movies={movies}/>
+        </Box>
+        <Box>
+        <WatchedSummary watched={watched} />
+        <WatchedMoviesList watched={watched} />
+        </Box>
+      </Main>
       
     </>
   );
