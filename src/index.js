@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import StarRating from './StarRating';
 import { useState } from 'react';
-// import './index.css';
-// import App from './App';
 
 export function Test(){
   const [movieRating, setMovieRating] = useState(0)
