@@ -189,6 +189,10 @@ function Error({message}){
   return <p className="error">⛔ {message}</p>
 }
 
+function SelectedMovie ({selectedId}){
+  return <div className="details">{selectedId}</div>
+}
+
 const KEY = 'e764f4e5'
 
 export default function App() {
@@ -197,7 +201,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [query, setQuery] = useState("");
-  const tempQuery = 'interstellar'
+  const [selectedId, setSelectedId] = useState(null)
 
   useEffect(function (){
     async function fetchMovies(){
